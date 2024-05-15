@@ -47,18 +47,19 @@ type traceContextHook struct {
 }
 
 func (h traceContextHook) Run(e *zerolog.Event, level zerolog.Level, message string) {
-	tx := apm.TransactionFromContext(h.ctx)
+	ctx := e.GetCtx()
+	tx := apm.TransactionFromContext(ctx)
 	if tx == nil {
 		return
 	}
 	traceContext := tx.TraceContext()
 	e.Hex(TraceIDFieldName, traceContext.Trace[:])
 	e.Hex(TransactionIDFieldName, traceContext.Span[:])
-	if span := apm.SpanFromContext(h.ctx); span != nil {
+	if span := apm.SpanFromContext(ctx); span != nil {
 		spanTraceContext := span.TraceContext()
 		e.Hex(SpanIDFieldName, spanTraceContext.Span[:])
 	} else {
-		_, ctx2 := apm.StartSpanOptions(h.ctx, "zero-log", "ZeroLog", apm.SpanOptions{
+		_, ctx2 := apm.StartSpanOptions(ctx, "zero-log", "ZeroLog", apm.SpanOptions{
 			ExitSpan: true,
 		})
 		if span2 := apm.SpanFromContext(ctx2); span2 != nil {
