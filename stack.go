@@ -20,7 +20,7 @@ package apmzerolog // import "go.elastic.co/apm/module/apmzerolog/v2"
 import (
 	"strconv"
 
-	"github.com/rs/zerolog/pkgerrors"
+	"github.com/rhinonet/zerolog/pkgerrors"
 
 	"go.elastic.co/apm/v2/stacktrace"
 )
@@ -28,7 +28,7 @@ import (
 // MarshalErrorStack marshals the stack trace in err, if err
 // was produced (or wrapped) by github.com/pkg/errors.
 //
-// This is similar to github.com/rs/zerolog/pkgerrors.MarshalStack,
+// This is similar to github.com/rhinonet/zerolog/pkgerrors.MarshalStack,
 // with the following differences:
 //   - the "source" field value may be an absolute path
 //   - the "func" field value will be fully qualified

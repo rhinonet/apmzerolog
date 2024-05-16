@@ -27,8 +27,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/pkgerrors"
+	"github.com/rhinonet/zerolog"
+	"github.com/rhinonet/zerolog/pkgerrors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -166,7 +166,7 @@ func TestWriterWithError(t *testing.T) {
 }
 
 func TestWriterWithErrorPkgErrorsStackMarshaler(t *testing.T) {
-	// Marshal stack trace using rs/zerolog/pkgerrors, which
+	// Marshal stack trace using rhinonet/zerolog/pkgerrors, which
 	// records only the unqualified function name.
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	defer func() {

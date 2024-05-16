@@ -27,8 +27,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/pkgerrors"
+	"github.com/rhinonet/zerolog"
+	"github.com/rhinonet/zerolog/pkgerrors"
 
 	"go.elastic.co/apm/v2"
 	"go.elastic.co/apm/v2/stacktrace"
@@ -46,7 +46,7 @@ const (
 )
 
 func init() {
-	stacktrace.RegisterLibraryPackage("github.com/rs/zerolog")
+	stacktrace.RegisterLibraryPackage("github.com/rhinonet/zerolog")
 }
 
 // Writer is an implementation of zerolog.LevelWriter, reporting log records as
@@ -56,7 +56,7 @@ func init() {
 // Because we only have access to the serialised form of the log record, we must
 // rely on enough information being encoded into the events. For error stack traces,
 // you must use zerolog's Stack() method, and set zerolog.ErrorStackMarshaler
-// either to github.com/rs/zerolog/pkgerrors.MarshalStack, or to the function
+// either to github.com/rhinonet/zerolog/pkgerrors.MarshalStack, or to the function
 // apmzerolog.MarshalErrorStack in this package. The pkgerrors.MarshalStack
 // implementation omits some information, whereas apmzerolog is designed to
 // convey the complete file location and fully qualified function name.

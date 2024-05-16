@@ -24,7 +24,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/rs/zerolog"
+	"github.com/rhinonet/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 

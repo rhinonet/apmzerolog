@@ -19,8 +19,7 @@ package apmzerolog // import "go.elastic.co/apm/module/apmzerolog/v2"
 
 import (
 	"context"
-
-	"github.com/rs/zerolog"
+	"github.com/rhinonet/zerolog"
 
 	"go.elastic.co/apm/v2"
 )
@@ -63,10 +62,12 @@ func (h traceContextHook) Run(e *zerolog.Event, level zerolog.Level, message str
 			ExitSpan: true,
 		})
 		if span2 := apm.SpanFromContext(ctx2); span2 != nil {
+			buffer3 := e.GetBuf()
 			spanTraceContext := span2.TraceContext()
 			e.Hex(SpanIDFieldName, spanTraceContext.Span[:])
 			span2.Name = "ZeroLog"
 			span2.Context.SetLabel("level", level)
+			span2.Context.SetLabel("buf", string(buffer3))
 			span2.Context.SetDatabase(apm.DatabaseSpanContext{
 				Statement: message,
 				Type:      "sql",
