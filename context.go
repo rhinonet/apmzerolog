@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package apmzerolog // import "go.elastic.co/apm/module/apmzerolog/v2"
+package apmzerolog // Package apmzerolog import "github.com/rhinonet/apmzerolog/v2"
 
 import (
 	"github.com/rhinonet/zerolog"
@@ -34,15 +34,11 @@ const (
 	TransactionIDFieldName = "transaction.id"
 )
 
-// TraceContextHook returns a zerolog.Hook that will add any trace context
+// TracingHook returns a zerolog.Hook that will add any trace context
 // contained in ctx to log events.
+type TracingHook struct{}
 
-type TraceContextHook interface {
-	Run(e *zerolog.Event, level zerolog.Level, message string)
-}
-type HookFunc func(e *zerolog.Event, level zerolog.Level, message string)
-
-func (h HookFunc) Run(e *zerolog.Event, level zerolog.Level, message string) {
+func (h TracingHook) Run(e *zerolog.Event, level zerolog.Level, message string) {
 	ctx := e.GetCtx()
 	tx := apm.TransactionFromContext(ctx)
 	if tx == nil {
