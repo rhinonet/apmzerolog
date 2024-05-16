@@ -18,7 +18,6 @@
 package apmzerolog // import "go.elastic.co/apm/module/apmzerolog/v2"
 
 import (
-	"context"
 	"github.com/rhinonet/zerolog"
 
 	"go.elastic.co/apm/v2"
@@ -37,15 +36,13 @@ const (
 
 // TraceContextHook returns a zerolog.Hook that will add any trace context
 // contained in ctx to log events.
-func TraceContextHook(ctx context.Context) zerolog.Hook {
-	return traceContextHook{ctx}
-}
 
-type traceContextHook struct {
-	ctx context.Context
+type TraceContextHook interface {
+	Run(e *zerolog.Event, level zerolog.Level, message string)
 }
+type HookFunc func(e *zerolog.Event, level zerolog.Level, message string)
 
-func (h traceContextHook) Run(e *zerolog.Event, level zerolog.Level, message string) {
+func (h HookFunc) Run(e *zerolog.Event, level zerolog.Level, message string) {
 	ctx := e.GetCtx()
 	tx := apm.TransactionFromContext(ctx)
 	if tx == nil {
