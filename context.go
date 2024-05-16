@@ -55,14 +55,14 @@ func (h TracingHook) Run(e *zerolog.Event, level zerolog.Level, message string) 
 			ExitSpan: true,
 		})
 		if span2 := apm.SpanFromContext(ctx2); span2 != nil {
-			buffer3 := e.GetBuf()
 			spanTraceContext := span2.TraceContext()
 			e.Hex(SpanIDFieldName, spanTraceContext.Span[:])
 			span2.Name = "ZeroLog"
 			span2.Context.SetLabel("level", level)
-			span2.Context.SetLabel("buf", string(buffer3))
+			span2.Context.SetLabel("message", message)
+			content := string(append(e.GetBuf(), '}'))
 			span2.Context.SetDatabase(apm.DatabaseSpanContext{
-				Statement: message,
+				Statement: content,
 				Type:      "sql",
 			})
 			span2.End()
