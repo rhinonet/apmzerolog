@@ -60,7 +60,7 @@ func (h TracingHook) Run(e *zerolog.Event, level zerolog.Level, message string) 
 			span2.Name = "ZeroLog"
 			span2.Context.SetLabel("level", level)
 			span2.Context.SetLabel("message", message)
-			content := string(append(e.GetBuf(), []byte(`"message":"`+message+`"}`)...))
+			content := string(append(e.GetBuf(), []byte(`,"message":"`+message+`"}`)...))
 			span2.Context.SetDatabase(apm.DatabaseSpanContext{
 				Statement: content,
 				Type:      "sql",
